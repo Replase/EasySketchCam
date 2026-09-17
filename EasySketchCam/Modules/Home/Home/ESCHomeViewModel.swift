@@ -1,5 +1,5 @@
 //
-//  CFHomeViewModel.swift
+//  ESCHomeViewModel.swift
 //  EasySketchCam
 //
 //  Created by Alan Emiliano Ramirez Ayala on 16/09/26.
@@ -14,7 +14,7 @@ import SwiftUI
 
 @MainActor
 @Observable
-class CFHomeViewModel {
+class ESCHomeViewModel {
     var selectedImage: UIImage?
     var showCamera = false
     var showGallery = false

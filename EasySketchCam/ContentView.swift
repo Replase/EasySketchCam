@@ -11,7 +11,7 @@ struct ContentView: View {
     
     var body: some View {
         TabView {
-            CFHomeFactory.make()
+            ESCHomeFactory.make()
                 .tabItem { Label("Inicio", systemImage: "house") }
         }
     }

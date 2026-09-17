@@ -1,5 +1,5 @@
 //
-//  CFMainRouter.swift
+//  ESCMainRouter.swift
 //  EasySketchCam
 //
 //  Created by Alan Emiliano Ramirez Ayala on 16/09/26.
@@ -10,7 +10,7 @@ import SwiftUI
 import Combine
 
 @MainActor
-final class CFMainRouter: ObservableObject {
+final class ESCMainRouter: ObservableObject {
     @Published var path = NavigationPath()
     
     func push<T: Hashable>(_ route: T) {

@@ -1,5 +1,5 @@
 //
-//  CFHomeModel.swift
+//  ESCHomeModel.swift
 //  EasySketchCam
 //
 //  Created by Alan Emiliano Ramirez Ayala on 16/09/26.

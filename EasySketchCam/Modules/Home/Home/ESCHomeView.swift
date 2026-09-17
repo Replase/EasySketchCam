@@ -1,5 +1,5 @@
 //
-//  CFHomeView.swift
+//  ESCHomeView.swift
 //  EasySketchCam
 //
 //  Created by Alan Emiliano Ramirez Ayala on 16/09/26.
@@ -8,9 +8,9 @@
 import SwiftUI
 import PhotosUI
 
-struct CFHomeView: View {
-    @State private var router = CFMainRouter()
-    @State private var viewModel: CFHomeViewModel
+struct ESCHomeView: View {
+    @StateObject private var router = ESCMainRouter()
+    @State private var viewModel: ESCHomeViewModel
     @State private var fotoSeleccionada: PhotosPickerItem? = nil
     
     private let columnas = [
@@ -19,7 +19,7 @@ struct CFHomeView: View {
         GridItem(.flexible(), spacing: 10)
     ]
     
-    init(viewModel: CFHomeViewModel) {
+    init(viewModel: ESCHomeViewModel) {
         self.viewModel = viewModel
     }
     
@@ -55,7 +55,7 @@ struct CFHomeView: View {
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
                                 .contextMenu {
                                     Button {
-                                        print("Iniciar calco de la imagen")
+                                        router.push(ESCHomeRouter.sketch(image: image.image))
                                     } label: {
                                         Label("Calcar Dibujo", systemImage: "pencil.line")
                                     }
@@ -90,12 +90,14 @@ struct CFHomeView: View {
             .onAppear {
                 viewModel.getImageSaved()
             }
+            .navigationDestination(for: ESCHomeRouter.self, destination: { route in
+                route.destination()
+            })
         }
     }
 }
 
 // MARK: - Selector de Cámara con UIImagePickerController
-
 struct CameraPicker: UIViewControllerRepresentable {
     @Binding var image: UIImage?
     @Environment(\.dismiss) private var dismiss
