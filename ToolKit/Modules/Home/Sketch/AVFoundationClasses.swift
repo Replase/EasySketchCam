@@ -1,6 +1,6 @@
 //
 //  AVFoundationClasses.swift
-//  EasySketchCam
+//  ToolKit
 //
 //  Created by Alan Emiliano Ramirez Ayala on 16/09/26.
 //
@@ -10,7 +10,7 @@ import AVFoundation
 
 // MARK: - UIView que hospeda la capa de preview de la cámara
 
-final class ESCCameraPreviewUIView: UIView {
+final class TKCameraPreviewUIView: UIView {
     override class var layerClass: AnyClass {
         AVCaptureVideoPreviewLayer.self
     }
@@ -22,26 +22,26 @@ final class ESCCameraPreviewUIView: UIView {
 
 // MARK: - Representable que arma y controla la sesión de captura
 
-struct ESCCameraPreviewView: UIViewRepresentable {
+struct TKCameraPreviewView: UIViewRepresentable {
     let session: AVCaptureSession
 
-    func makeUIView(context: Context) -> ESCCameraPreviewUIView {
-        let view = ESCCameraPreviewUIView()
+    func makeUIView(context: Context) -> TKCameraPreviewUIView {
+        let view = TKCameraPreviewUIView()
         view.previewLayer.session = session
         view.previewLayer.videoGravity = .resizeAspectFill
         view.backgroundColor = .black
         return view
     }
 
-    func updateUIView(_ uiView: ESCCameraPreviewUIView, context: Context) {}
+    func updateUIView(_ uiView: TKCameraPreviewUIView, context: Context) {}
 }
 
 // MARK: - Controlador de la sesión de captura (maneja permisos, start/stop)
 
 @Observable
-final class ESCCameraSessionController {
+final class TKCameraSessionController {
     let session = AVCaptureSession()
-    private let queue = DispatchQueue(label: "cf.camera.session.queue")
+    private let queue = DispatchQueue(label: "tk.camera.session.queue")
 
     func start() {
         AVCaptureDevice.requestAccess(for: .video) { [weak self] granted in

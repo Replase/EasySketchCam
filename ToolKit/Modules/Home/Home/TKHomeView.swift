@@ -1,6 +1,6 @@
 //
-//  ESCHomeView.swift
-//  EasySketchCam
+//  TKHomeView.swift
+//  ToolKit
 //
 //  Created by Alan Emiliano Ramirez Ayala on 16/09/26.
 //
@@ -8,10 +8,15 @@
 import SwiftUI
 import PhotosUI
 
-struct ESCHomeView: View {
-    @StateObject private var router = ESCMainRouter()
-    @State private var viewModel: ESCHomeViewModel
+struct TKHomeView: View {
+    @StateObject private var router = TKMainRouter()
+    @State private var viewModel: TKHomeViewModel
     @State private var fotoSeleccionada: PhotosPickerItem? = nil
+    @AppStorage("TKAppColorTheme") private var colorThemeRaw: String = TKAppColorTheme.blue.rawValue
+
+    private var accentColor: Color {
+        TKAppColorTheme(rawValue: colorThemeRaw)?.color ?? .blue
+    }
     
     private let columnas = [
         GridItem(.flexible(), spacing: 10),
@@ -19,7 +24,7 @@ struct ESCHomeView: View {
         GridItem(.flexible(), spacing: 10)
     ]
     
-    init(viewModel: ESCHomeViewModel) {
+    init(viewModel: TKHomeViewModel) {
         self.viewModel = viewModel
     }
     
@@ -36,12 +41,12 @@ struct ESCHomeView: View {
                             Label("Galeria", systemImage: "photo")
                         }
                         .buttonStyle(.glass)
-                        .foregroundStyle(.red)
+                        .foregroundStyle(accentColor)
                         Button("Camara", systemImage: "camera", action: {
                             viewModel.showCamera.toggle()
                         })
                         .buttonStyle(.glass)
-                        .foregroundStyle(.red)
+                        .foregroundStyle(accentColor)
                     }
                     .padding(.top, 20)
                     .padding(.bottom, 20)
@@ -55,7 +60,7 @@ struct ESCHomeView: View {
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
                                 .contextMenu {
                                     Button {
-                                        router.push(ESCHomeRouter.sketch(image: image.image))
+                                        router.push(TKHomeRouter.sketch(image: image.image))
                                     } label: {
                                         Label("Calcar Dibujo", systemImage: "pencil.line")
                                     }
@@ -81,7 +86,8 @@ struct ESCHomeView: View {
                     }
                 }
             }
-            .navigationTitle("EasySketchCam")
+            .background(TKTheme.background)
+            .navigationTitle("ToolKit")
             .navigationBarTitleDisplayMode(.large)
             .fullScreenCover(isPresented: $viewModel.showCamera) {
                 CameraPicker(image: $viewModel.selectedImage)
@@ -90,7 +96,7 @@ struct ESCHomeView: View {
             .onAppear {
                 viewModel.getImageSaved()
             }
-            .navigationDestination(for: ESCHomeRouter.self, destination: { route in
+            .navigationDestination(for: TKHomeRouter.self, destination: { route in
                 route.destination()
             })
         }

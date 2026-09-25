@@ -1,19 +1,18 @@
 //
-//  ESCSketchView.swift
-//  EasySketchCam
+//  TKSketchView.swift
+//  ToolKit
 //
 //  Created by Alan Emiliano Ramirez Ayala on 16/09/26.
 //
 
 import SwiftUI
 
-struct ESCSketchView: View {
+struct TKSketchView: View {
     let image: UIImage
     
-    @State private var cameraController = ESCCameraSessionController()
+    @State private var cameraController = TKCameraSessionController()
     @State private var opacidad: Double = 0.5
     @Environment(\.dismiss) private var dismiss
-    
     
     @State private var offset: CGSize = .zero
     @State private var scale: CGFloat = 1.0
@@ -23,7 +22,7 @@ struct ESCSketchView: View {
     
     var body: some View {
         ZStack {
-            ESCCameraPreviewView(session: cameraController.session)
+            TKCameraPreviewView(session: cameraController.session)
                 .ignoresSafeArea()
             
             Image(uiImage: image)
@@ -92,7 +91,6 @@ struct ESCSketchView: View {
         }
         .statusBarHidden()
     }
-    
     
     private var dragGesture: some Gesture {
         DragGesture()

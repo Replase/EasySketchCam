@@ -1,6 +1,6 @@
 //
-//  ESCHomeViewModel.swift
-//  EasySketchCam
+//  TKHomeViewModel.swift
+//  ToolKit
 //
 //  Created by Alan Emiliano Ramirez Ayala on 16/09/26.
 //
@@ -14,13 +14,12 @@ import SwiftUI
 
 @MainActor
 @Observable
-class ESCHomeViewModel {
+class TKHomeViewModel {
     var selectedImage: UIImage?
     var showCamera = false
     var showGallery = false
     var showActionSheet = false
     var listImages: [CalcaImagen] = []
-    
     
     private func getPathDocuments() -> URL {
         FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
@@ -40,7 +39,6 @@ class ESCHomeViewModel {
                 self.listImages.append(contentsOf: newImages)
                 let savedNames = self.listImages.map { $0.dataName }
                 UserDefaults.standard.set(savedNames, forKey: "lista_imagenes_calcafacil")
-                
             }
         }
     }
@@ -58,7 +56,6 @@ class ESCHomeViewModel {
                 self.listImages.append(contentsOf: newImages)
                 let savedNames = self.listImages.map { $0.dataName }
                 UserDefaults.standard.set(savedNames, forKey: "lista_imagenes_calcafacil")
-                
             }
         }
     }
@@ -107,5 +104,4 @@ class ESCHomeViewModel {
         let newListImage = listImages.map { $0.dataName }
         UserDefaults.standard.set(newListImage, forKey: "lista_imagenes_calcafacil")
     }
-    
 }

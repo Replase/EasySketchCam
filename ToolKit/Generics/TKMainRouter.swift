@@ -1,6 +1,6 @@
 //
-//  ESCMainRouter.swift
-//  EasySketchCam
+//  TKMainRouter.swift
+//  ToolKit
 //
 //  Created by Alan Emiliano Ramirez Ayala on 16/09/26.
 //
@@ -10,7 +10,7 @@ import SwiftUI
 import Combine
 
 @MainActor
-final class ESCMainRouter: ObservableObject {
+final class TKMainRouter: ObservableObject {
     @Published var path = NavigationPath()
     
     func push<T: Hashable>(_ route: T) {

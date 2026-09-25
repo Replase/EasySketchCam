@@ -1,6 +1,6 @@
 //
-//  ESCHomeModel.swift
-//  EasySketchCam
+//  TKHomeModel.swift
+//  ToolKit
 //
 //  Created by Alan Emiliano Ramirez Ayala on 16/09/26.
 //
