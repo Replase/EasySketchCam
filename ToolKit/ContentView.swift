@@ -17,12 +17,15 @@ struct ContentView: View {
 
     var body: some View {
         TabView {
-            TKHomeFactory.make()
-                .tabItem { Label("Bocetos", systemImage: "pencil.and.outline") }
-            TKQRView()
-                .tabItem { Label("Generar QR", systemImage: "plus.circle.fill") }
-            TKSettingsFactory.makeView()
-                .tabItem { Label("Configuración", systemImage: "slider.horizontal.2.square") }
+            Tab("Bocetos", systemImage: "pencil.and.outline") {
+                TKHomeFactory.make()
+            }
+            Tab("Generar QR", systemImage: "qrcode") {
+                TKQRView()
+            }
+            Tab("Configuración", systemImage: "slider.horizontal.2.square") {
+                TKSettingsFactory.makeView()
+            }
         }
         .tint(tintColor)
     }

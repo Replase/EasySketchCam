@@ -23,22 +23,16 @@ struct TKQRView: View {
 
     var body: some View {
         NavigationStack {
-            Group {
-                if viewModel.items.isEmpty {
-                    emptyState
-                } else {
-                    savedList
-                }
-            }
+            list
             .background(TKTheme.background)
             .navigationTitle("Códigos QR")
             .navigationBarTitleDisplayMode(.large)
             .toolbar {
-                ToolbarItem(placement: .primaryAction) {
+                ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         showCreate = true
                     } label: {
-                        Image(systemName: "plus")
+                        Label("Nuevo QR", systemImage: "plus")
                     }
                     .tint(accentColor)
                 }
@@ -56,29 +50,10 @@ struct TKQRView: View {
         }
     }
 
-    // MARK: - Empty State
+    // MARK: - List (with built-in empty state)
 
     @ViewBuilder
-    private var emptyState: some View {
-        VStack(spacing: 16) {
-            Image(systemName: "qrcode")
-                .font(.system(size: 64))
-                .foregroundStyle(accentColor.opacity(0.6))
-            Text("Sin códigos QR")
-                .font(.title3.bold())
-            Text("Toca + para crear tu primer código QR")
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
-                .multilineTextAlignment(.center)
-        }
-        .padding()
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-    }
-
-    // MARK: - Saved List
-
-    @ViewBuilder
-    private var savedList: some View {
+    private var list: some View {
         List {
             ForEach(viewModel.items) { item in
                 TKQRRowView(item: item, accentColor: accentColor, viewModel: viewModel) {
@@ -87,6 +62,16 @@ struct TKQRView: View {
             }
             .onDelete { offsets in
                 viewModel.delete(at: offsets)
+            }
+        }
+        .overlay {
+            if viewModel.items.isEmpty {
+                ContentUnavailableView {
+                    Label("Sin códigos QR", systemImage: "qrcode")
+                } description: {
+                    Text("Toca + para crear tu primer código QR")
+                }
+                .foregroundStyle(accentColor, .secondary)
             }
         }
     }

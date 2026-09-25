@@ -42,6 +42,7 @@ struct TKSettingsView: View {
             }
         }
         .navigationTitle("Configuración")
+        .navigationBarTitleDisplayMode(.large)
     }
 
     @ViewBuilder
