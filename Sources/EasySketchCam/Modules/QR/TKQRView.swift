@@ -55,9 +55,9 @@ struct TKQRView: View {
     private var list: some View {
         List {
             ForEach(viewModel.items) { item in
-                TKQRRowView(item: item, accentColor: accentColor, viewModel: viewModel) {
+                TKQRRowView(item: item, accentColor: accentColor, viewModel: viewModel, onEdit: {
                     itemToEdit = item
-                }
+                })
             }
         }
         .overlay {
@@ -94,6 +94,13 @@ private struct TKQRRowView: View {
     let onEdit: () -> Void
 
     @State private var showDetail = false
+
+    init(item: TKQRItem, accentColor: Color, viewModel: TKQRViewModel, onEdit: @escaping () -> Void) {
+        self.item = item
+        self.accentColor = accentColor
+        self.viewModel = viewModel
+        self.onEdit = onEdit
+    }
 
     var body: some View {
         Button {

@@ -17,7 +17,7 @@ import SwiftUI
 final class TKMainRouter {
     var path = NavigationPath()
 
-    func push<T: Hashable>(_ route: T) {
+    func push(_ route: any Hashable) {
         path.append(route)
     }
 

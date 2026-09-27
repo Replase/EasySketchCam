@@ -141,11 +141,11 @@ struct TKHomeView: View {
         ScrollView {
             LazyVGrid(columns: columns, spacing: 2) {
                 ForEach(viewModel.listImages) { item in
-                    TKPhotoCell(item: item, accentColor: accentColor) {
+                    TKPhotoCell(item: item, accentColor: accentColor, onSketch: {
                         router.push(TKHomeRouter.sketch(item: item))
-                    } onDelete: {
+                    }, onDelete: {
                         viewModel.deleteImage(image: item)
-                    }
+                    })
                 }
             }
         }
@@ -197,6 +197,13 @@ private struct TKPhotoCell: View {
     let onDelete: () -> Void
 
     @State private var showActions = false
+
+    init(item: CalcaImagen, accentColor: Color, onSketch: @escaping () -> Void, onDelete: @escaping () -> Void) {
+        self.item = item
+        self.accentColor = accentColor
+        self.onSketch = onSketch
+        self.onDelete = onDelete
+    }
 
     var body: some View {
         Color.clear

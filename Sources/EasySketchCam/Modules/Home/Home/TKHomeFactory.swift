@@ -6,6 +6,7 @@
 //
 
 struct TKHomeFactory {
+    @MainActor
     static func make() -> TKHomeView {
         let viewModel = TKHomeViewModel()
         return TKHomeView(viewModel: viewModel)
