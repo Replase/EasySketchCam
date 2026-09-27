@@ -1,0 +1,119 @@
+//
+//  TKHomeViewModel.swift
+//  EasySketchCam
+//
+//  Created by Alan Emiliano Ramirez Ayala on 16/09/26.
+//
+
+import Foundation
+import Observation
+import SwiftUI
+#if !SKIP
+import PhotosUI
+#endif
+
+private let imagesStorageKey = "lista_imagenes_calcafacil"
+
+@MainActor
+@Observable
+final class TKHomeViewModel {
+    var selectedImage: UIImage?
+    var showCamera = false
+    var showGallery = false
+    var showActionSheet = false
+    var listImages: [CalcaImagen] = []
+
+    /// URL que entrega el media picker de SkipKit (Android).
+    var pickedImageURL: URL?
+
+    private func getPathDocuments() -> URL {
+        FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+    }
+
+    // MARK: - Import
+
+    #if !SKIP
+    /// iOS: imagen elegida con `PhotosPicker`.
+    func saveImage(_ image: PhotosPickerItem?) {
+        Task {
+            guard let data = try? await image?.loadTransferable(type: Data.self) else { return }
+            await MainActor.run {
+                self.addImage(data: data)
+            }
+        }
+    }
+
+    /// iOS: foto tomada con la cámara (`UIImagePickerController`).
+    func savePhoto(_ image: UIImage) {
+        guard let imageData = image.jpegData(compressionQuality: 1) else { return }
+        addImage(data: imageData)
+    }
+    #endif
+
+    /// Android (y cualquier plataforma): importa una imagen a partir de una URL
+    /// `file://` o `content://` devuelta por el media picker.
+    func importImage(from url: URL) {
+        guard let data = try? Data(contentsOf: url) else {
+            logger.error("No se pudo leer la imagen en \(url.absoluteString)")
+            return
+        }
+        addImage(data: TKImageUtils.normalizedImageData(data))
+    }
+
+    private func addImage(data: Data) {
+        guard let uiImage = UIImage(data: data),
+              let dataName = saveImageInApp(data: data) else { return }
+        listImages.append(CalcaImagen(dataName: dataName, image: uiImage))
+        persistNames()
+    }
+
+    func saveImageInApp(data: Data) -> String? {
+        let name = "\(UUID().uuidString).jpg"
+        let dataPath = getPathDocuments().appendingPathComponent(name)
+
+        do {
+            try data.write(to: dataPath)
+            return name
+        } catch {
+            logger.error("Error al guardar imagen en disco: \(error.localizedDescription)")
+            return nil
+        }
+    }
+
+    // MARK: - Load / Delete
+
+    func getImageSaved() {
+        guard let saveNames = UserDefaults.standard.stringArray(forKey: imagesStorageKey) else { return }
+
+        var listImagesSaved: [CalcaImagen] = []
+
+        for name in saveNames {
+            let dataPath = getPathDocuments().appendingPathComponent(name)
+            if let dataImage = try? Data(contentsOf: dataPath),
+               let uiImage = UIImage(data: dataImage) {
+                listImagesSaved.append(CalcaImagen(dataName: name, image: uiImage))
+            }
+        }
+
+        self.listImages = listImagesSaved
+    }
+
+    func deleteImage(image: CalcaImagen) {
+        let dataPath = getPathDocuments().appendingPathComponent(image.dataName)
+        do {
+            if FileManager.default.fileExists(atPath: dataPath.path) {
+                try FileManager.default.removeItem(at: dataPath)
+            }
+        } catch {
+            logger.error("Error al eliminar archivo del almacenamiento: \(error.localizedDescription)")
+        }
+
+        listImages.removeAll { $0.id == image.id }
+        persistNames()
+    }
+
+    private func persistNames() {
+        let names = listImages.map { $0.dataName }
+        UserDefaults.standard.set(names, forKey: imagesStorageKey)
+    }
+}
