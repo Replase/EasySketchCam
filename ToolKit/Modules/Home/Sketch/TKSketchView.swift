@@ -16,6 +16,7 @@ struct TKSketchView: View {
     
     @State private var offset: CGSize = .zero
     @State private var scale: CGFloat = 1.0
+    @State private var isLocked: Bool = false
     
     @GestureState private var dragTranslation: CGSize = .zero
     @GestureState private var magnifyBy: CGFloat = 1.0
@@ -34,7 +35,7 @@ struct TKSketchView: View {
                     x: offset.width + dragTranslation.width,
                     y: offset.height + dragTranslation.height
                 )
-                .gesture(combinedGesture)
+                .gesture(isLocked ? nil : combinedGesture)
             
             VStack {
                 HStack {
@@ -49,6 +50,18 @@ struct TKSketchView: View {
                     }
                     
                     Spacer()
+                    
+                    Button {
+                        withAnimation(.spring) {
+                            isLocked.toggle()
+                        }
+                    } label: {
+                        Image(systemName: isLocked ? "lock.fill" : "lock.open.fill")
+                            .font(.title2)
+                            .foregroundStyle(isLocked ? .yellow : .white)
+                            .padding()
+                            .background(.black.opacity(0.4), in: Circle())
+                    }
                     
                     Button {
                         withAnimation(.spring) {

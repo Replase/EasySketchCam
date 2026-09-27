@@ -25,16 +25,17 @@ final class TKQRViewModel {
 
     // MARK: - CRUD
 
-    func save(text: String, label: String) {
-        let item = TKQRItem(text: text, label: label)
+    func save(text: String, label: String, type: TKQRType) {
+        let item = TKQRItem(text: text, label: label, type: type)
         items.insert(item, at: 0)
         persist()
     }
 
-    func update(_ item: TKQRItem, text: String, label: String) {
+    func update(_ item: TKQRItem, text: String, label: String, type: TKQRType) {
         guard let index = items.firstIndex(where: { $0.id == item.id }) else { return }
         items[index].text = text
         items[index].label = label.isEmpty ? text : label
+        items[index].type = type
         persist()
     }
 
