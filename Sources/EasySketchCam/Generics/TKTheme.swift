@@ -57,3 +57,17 @@ extension View {
         self.background(TKTheme.background.ignoresSafeArea())
     }
 }
+
+extension View {
+
+    /// Hace que toda el área del view responda a toques (iOS).
+    /// `contentShape` no existe en Skip; en Android el área ya es tocable completa.
+    @ViewBuilder
+    func tkTapArea() -> some View {
+        #if SKIP
+        self
+        #else
+        self.contentShape(Rectangle())
+        #endif
+    }
+}

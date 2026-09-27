@@ -134,7 +134,7 @@ private struct TKQRRowView: View {
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
-            .contentShape(Rectangle())
+            .tkTapArea()
         }
         .buttonStyle(.plain)
         .swipeActions(edge: .trailing, allowsFullSwipe: true) {
@@ -201,7 +201,6 @@ private struct TKQRDetailView: View {
                             .foregroundStyle(.secondary)
                         Text(item.text)
                             .font(.body)
-                            .textSelection(.enabled)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(16)

@@ -207,7 +207,7 @@ private struct TKPhotoCell: View {
                     .scaledToFill()
             }
             .clipped()
-            .contentShape(Rectangle())
+            .tkTapArea()
             .onTapGesture {
                 showActions = true
             }
