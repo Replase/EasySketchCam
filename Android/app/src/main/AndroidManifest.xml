@@ -13,7 +13,7 @@
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 
     <application
-        android:label="${PRODUCT_NAME}"
+        android:label="ToolKit"
         android:name=".AndroidAppMain"
         android:supportsRtl="true"
         android:allowBackup="true"

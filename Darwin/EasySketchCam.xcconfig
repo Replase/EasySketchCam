@@ -15,7 +15,7 @@ INFOPLIST_FILE = Info.plist
 GENERATE_INFOPLIST_FILE = YES
 
 // The user-visible name of the app (localizable)
-INFOPLIST_KEY_CFBundleDisplayName = EasySketchCam
+INFOPLIST_KEY_CFBundleDisplayName = ToolKit
 //INFOPLIST_KEY_LSApplicationCategoryType = public.app-category.utilities
 
 // Privacy descriptions (camera for live tracing, photo library for importing sketches)
