@@ -27,7 +27,7 @@ final class TKHomeViewModel {
     var pickedImageURL: URL?
 
     private func getPathDocuments() -> URL {
-        FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        URL.documentsDirectory
     }
 
     // MARK: - Import
