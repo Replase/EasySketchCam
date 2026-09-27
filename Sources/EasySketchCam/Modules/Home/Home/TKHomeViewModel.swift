@@ -83,7 +83,8 @@ final class TKHomeViewModel {
     // MARK: - Load / Delete
 
     func getImageSaved() {
-        guard let saveNames = UserDefaults.standard.stringArray(forKey: imagesStorageKey) else { return }
+        let saveNames = loadNames()
+        guard !saveNames.isEmpty else { return }
 
         var listImagesSaved: [CalcaImagen] = []
 
@@ -112,8 +113,26 @@ final class TKHomeViewModel {
         persistNames()
     }
 
+    // Los nombres se guardan como JSON (Data): en Android, UserDefaults no
+    // soporta arreglos (`stringArray(forKey:)` no existe y `set([String])` se ignora).
     private func persistNames() {
         let names = listImages.map { $0.dataName }
-        UserDefaults.standard.set(names, forKey: imagesStorageKey)
+        if let data = try? JSONEncoder().encode(names) {
+            UserDefaults.standard.set(data, forKey: imagesStorageKey)
+        }
+    }
+
+    private func loadNames() -> [String] {
+        if let data = UserDefaults.standard.data(forKey: imagesStorageKey),
+           let names = try? JSONDecoder().decode([String].self, from: data) {
+            return names
+        }
+        #if !SKIP
+        // Compatibilidad con versiones anteriores de iOS, que guardaban un [String].
+        if let legacy = UserDefaults.standard.stringArray(forKey: imagesStorageKey) {
+            return legacy
+        }
+        #endif
+        return []
     }
 }
