@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:Darwin/EasySketchCam.xcodeproj">
+      location = "group:Darwin/ToolKit.xcodeproj">
    </FileRef>
 </Workspace>

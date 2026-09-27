@@ -1,4 +1,4 @@
-package easy.sketch.cam
+package tool.kit
 
 import skip.lib.*
 import skip.model.*
@@ -27,10 +27,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.material3.MaterialTheme
 import androidx.core.app.ActivityCompat
 
-internal val logger: SkipLogger = SkipLogger(subsystem = "easy.sketch.cam", category = "EasySketchCam")
+internal val logger: SkipLogger = SkipLogger(subsystem = "tool.kit", category = "ToolKit")
 
-private typealias AppRootView = EasySketchCamRootView
-private typealias AppDelegate = EasySketchCamAppDelegate
+private typealias AppRootView = ToolKitRootView
+private typealias AppDelegate = ToolKitAppDelegate
 
 /// AndroidAppMain is the `android.app.Application` entry point, and must match `application android:name` in the AndroidMainfest.xml file.
 open class AndroidAppMain: Application {

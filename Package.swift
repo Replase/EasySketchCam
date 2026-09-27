@@ -3,11 +3,11 @@
 import PackageDescription
 
 let package = Package(
-    name: "easysketchcam",
+    name: "toolkit",
     defaultLocalization: "es",
     platforms: [.iOS(.v18), .macOS(.v15)],
     products: [
-        .library(name: "EasySketchCam", type: .dynamic, targets: ["EasySketchCam"]),
+        .library(name: "ToolKit", type: .dynamic, targets: ["ToolKit"]),
     ],
     dependencies: [
         .package(url: "https://github.com/skiptools/skip.git", from: "1.9.7"),
@@ -15,7 +15,7 @@ let package = Package(
         .package(url: "https://github.com/skiptools/skip-kit.git", from: "1.1.3"),
     ],
     targets: [
-        .target(name: "EasySketchCam", dependencies: [
+        .target(name: "ToolKit", dependencies: [
             .product(name: "SkipUI", package: "skip-ui"),
             .product(name: "SkipKit", package: "skip-kit"),
         ], resources: [.process("Resources")], plugins: [.plugin(name: "skipstone", package: "skip")]),

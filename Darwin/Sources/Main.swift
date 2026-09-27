@@ -1,8 +1,8 @@
 import SwiftUI
-import EasySketchCam
+import ToolKit
 
-private typealias AppRootView = EasySketchCamRootView
-private typealias AppDelegate = EasySketchCamAppDelegate
+private typealias AppRootView = ToolKitRootView
+private typealias AppDelegate = ToolKitAppDelegate
 
 /// The entry point to the app simply loads the App implementation from SPM module.
 @main struct AppMain: App {

@@ -1,4 +1,4 @@
-# EasySketchCam
+# ToolKit
 
 App para calcar dibujos con la cámara y generar códigos QR, para **iOS y Android**
 desde un solo código en Swift/SwiftUI usando [Skip](https://skip.dev) en modo
@@ -7,12 +7,12 @@ desde un solo código en Swift/SwiftUI usando [Skip](https://skip.dev) en modo
 ## Estructura
 
 ```
-EasySketchCam/
+ToolKit/
 ├── Package.swift               # Paquete SwiftPM con el módulo compartido
 ├── Skip.env                    # Nombre, bundle id y versión (iOS + Android)
 ├── Project.xcworkspace         # ← Abre ESTE archivo en Xcode
-├── Sources/EasySketchCam/      # Código compartido (SwiftUI)
-│   ├── EasySketchCamApp.swift  # Vista raíz + delegate del ciclo de vida
+├── Sources/ToolKit/      # Código compartido (SwiftUI)
+│   ├── ToolKitApp.swift  # Vista raíz + delegate del ciclo de vida
 │   ├── ContentView.swift
 │   ├── Generics/               # Router, tema, íconos, utilidades
 │   ├── Modules/                # Home (bocetos), Sketch (calcar), QR, Settings
@@ -38,10 +38,10 @@ También necesitas Android Studio (para el SDK y un emulador).
 
 1. Abre un emulador de Android desde Android Studio (Device Manager) o conecta un teléfono.
 2. Abre `Project.xcworkspace` en Xcode.
-3. Elige el scheme **EasySketchCam App** y un simulador de iPhone → **Run**.
+3. Elige el scheme **ToolKit App** y un simulador de iPhone → **Run**.
 
 Xcode compila la app de iOS y, en la misma corrida, transpila y lanza la app de
-Android en el emulador (controlado por `SKIP_ACTION` en `Darwin/EasySketchCam.xcconfig`:
+Android en el emulador (controlado por `SKIP_ACTION` en `Darwin/ToolKit.xcconfig`:
 `launch`, `build` o `none`).
 
 Desde terminal también puedes usar:
@@ -76,7 +76,7 @@ El código específico de cada plataforma está dentro de bloques `#if SKIP` (An
 - Para íconos nuevos agrega un caso en `TKSymbol` (o un SVG en `Module.xcassets`).
 - Si algo no está soportado, revisa la tabla de compatibilidad de
   [SkipUI](https://github.com/skiptools/skip-ui#supported-swiftui) o escribe esa
-  parte en Kotlin dentro de `Sources/EasySketchCam/Skip/`.
+  parte en Kotlin dentro de `Sources/ToolKit/Skip/`.
 
 Los datos existentes de iOS (bocetos y QRs guardados) se conservan: se mantienen
 el bundle id `ToolKit.ToolKit` y las mismas llaves de `UserDefaults`.
