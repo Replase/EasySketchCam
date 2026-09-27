@@ -51,7 +51,7 @@ struct TKSketchView: View {
 
                     Button {
                         withAnimation(.spring) {
-                            isLocked.toggle()
+                            isLocked = !isLocked
                         }
                     } label: {
                         Image(systemName: isLocked ? TKSymbol.locked : TKSymbol.unlocked)
